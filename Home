@@ -8,12 +8,13 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Preloader Style */
     #preloader {
       opacity: 1;
       transition: opacity 0.5s ease;
       position: fixed;
       inset: 0;
-      z-index: 999;
+      z-index: 9999;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -28,11 +29,11 @@
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
   <!-- Preloader -->
-  <div id="preloader" class="flex items-center justify-center fixed inset-0 z-50 bg-neutral-950">
-  <h1 class="text-6xl sm:text-7xl font-extrabold tracking-wider animate-pulse text-white text-center">
-    RH Management
-  </h1>
-</div>
+  <div id="preloader">
+    <h1 class="text-6xl sm:text-7xl font-extrabold tracking-wider animate-pulse text-white text-center">
+      RH Management
+    </h1>
+  </div>
 
   <!-- Header -->
   <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
@@ -145,5 +146,3 @@
 
 </body>
 </html>
-
-
