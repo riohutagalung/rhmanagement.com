@@ -1,246 +1,195 @@
+<!-- File: index.php -->
+<?php
+$success = $error = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama = htmlspecialchars($_POST['nama']);
+    $email = htmlspecialchars($_POST['email']);
+    $pesan = htmlspecialchars($_POST['pesan']);
+
+    $to = "contact@rhmanagement.co.id";
+    $subject = "Pesan dari $nama via Website RH Management";
+    $body = "Nama: $nama\nEmail: $email\nPesan: $pesan";
+    $headers = "From: $email";
+
+    if(mail($to, $subject, $body, $headers)){
+        $success = "Pesan berhasil dikirim! Terima kasih, $nama.";
+    } else {
+        $error = "Maaf, terjadi kesalahan. Coba lagi nanti.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RH Management — Growth Partner for Brands & Marketplaces</title>
-  <meta name="description" content="RH Management membantu brand bertumbuh di e‑commerce & sosial media: ops, ads, content, KOL, data." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RH Management</title>
+<style>
+/* Reset & Global */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{line-height:1.6;color:#333;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+/* Header */
+header{background:#0a0a0a;color:#fff;padding:20px 0;position:sticky;top:0;z-index:999;}
+header .container{width:90%;margin:auto;display:flex;justify-content:space-between;align-items:center;}
+header h1{font-size:24px;font-weight:bold;}
+nav a{margin-left:20px;color:#fff;font-weight:bold;transition:0.3s;}
+nav a:hover{color:#f39c12;}
+
+/* Hero */
+.hero{background:url('https://source.unsplash.com/1600x800/?business,office') center/cover no-repeat;height:90vh;display:flex;justify-content:center;align-items:center;color:#fff;text-align:center;position:relative;}
+.hero::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);}
+.hero-content{position:relative;z-index:2;animation:fadeInUp 1s;}
+.hero h2{font-size:48px;margin-bottom:20px;}
+.hero p{font-size:20px;margin-bottom:30px;}
+.hero .btn{padding:15px 30px;background:#f39c12;color:#fff;border:none;border-radius:5px;font-size:18px;cursor:pointer;transition:0.3s;}
+.hero .btn:hover{background:#e67e22;}
+
+/* Sections */
+.section{padding:80px 10%;}
+.section h3{text-align:center;font-size:32px;margin-bottom:40px;}
+.section p{text-align:center;font-size:18px;max-width:800px;margin:auto;}
+
+/* Features & Services & Portfolio */
+.features,.services,.portfolio,.testimonials{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.1);flex:1 1 250px;transition:0.3s;text-align:center;}
+.card img{max-width:100%;border-radius:10px;margin-bottom:15px;}
+.card:hover{transform:translateY(-10px);}
+.testimonials .card{max-width:300px;}
+
+/* Contact */
+.contact form{max-width:600px;margin:auto;display:flex;flex-direction:column;gap:15px;}
+.contact input,.contact textarea{padding:10px;font-size:16px;border:1px solid #ccc;border-radius:5px;width:100%;}
+.contact button{padding:15px;font-size:18px;border:none;background:#0a0a0a;color:#fff;cursor:pointer;border-radius:5px;transition:0.3s;}
+.contact button:hover{background:#f39c12;}
+.success-msg{text-align:center;color:green;margin-bottom:20px;}
+.error-msg{text-align:center;color:red;margin-bottom:20px;}
+
+/* Footer */
+footer{background:#0a0a0a;color:#fff;text-align:center;padding:20px 0;}
+
+/* WA Button */
+.wa-button{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px 20px;border-radius:50px;font-weight:bold;box-shadow:0 5px 10px rgba(0,0,0,0.3);cursor:pointer;transition:0.3s;z-index:999;}
+.wa-button:hover{background:#128c7e;}
+
+/* Animations */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(50px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{opacity:0;animation:fadeInUp 1s forwards;}
+
+/* Slider basic */
+.slider{display:flex;overflow-x:auto;scroll-behavior:smooth;gap:20px;padding-bottom:10px;}
+.slider::-webkit-scrollbar{display:none;}
+</style>
 </head>
-<body class="min-h-screen bg-neutral-950 text-neutral-100">
-  <!-- Nav -->
-  <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
-    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-2">
-        <span class="inline-block h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="font-semibold tracking-wide">RH Management</span>
-      </a>
-      <div class="hidden md:flex items-center gap-6 text-sm text-neutral-300">
-        <a href="#services" class="hover:text-white">Services</a>
-        <a href="#work" class="hover:text-white">Work</a>
-        <a href="#about" class="hover:text-white">About</a>
-        <a href="#contact" class="hover:text-white">Contact</a>
-        <a href="mailto:contact@rhmanagement.com" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">contact@rhmanagement.com</a>
-      </div>
+<body>
+
+<header>
+  <div class="container">
+    <h1>RH Management</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section id="home" class="relative overflow-hidden">
-    <div class="absolute inset-0" style="background:
-      radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
-      radial-gradient(circle at 80% 30%, #22d3ee22, transparent 40%);
-    "></div>
-    <div class="relative max-w-6xl mx-auto px-4 pt-16 pb-24">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            Growth Partner for <span class="text-emerald-400">Brands</span> &<br class="hidden md:block" /> Marketplaces
-          </h1>
-          <p class="mt-5 text-neutral-300 max-w-xl">
-            RH Management membantu bisnis skala UKM sampai enterprise mengoptimalkan kanal e-commerce & media sosial — dari strategi, eksekusi, sampai reporting yang bisa diandalkan.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a href="#contact" class="px-5 py-3 rounded-2xl bg-emerald-500 text-neutral-900 font-semibold hover:bg-emerald-400">Konsultasi Gratis</a>
-            <a href="#work" class="px-5 py-3 rounded-2xl border border-neutral-700 hover:border-neutral-500">Lihat Portfolio</a>
-          </div>
-          <div class="mt-8 flex items-center gap-6 text-sm text-neutral-400">
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span>Data-driven</div>
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-sky-400"></span>Omnichannel</div>
-            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-fuchsia-400"></span>ROI Focus</div>
-          </div>
-        </div>
-        <div class="relative">
-          <div class="aspect-[4/3] rounded-3xl bg-gradient-to-br from-neutral-900 to-neutral-800 border border-neutral-800 shadow-2xl p-6">
-            <div class="grid grid-cols-3 gap-3 h-full">
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Strategy</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Campaign</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Operations</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">KOL</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Content</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Paid Ads</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Catalog</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">WMS</div>
-              <div class="rounded-2xl border border-neutral-700/60 bg-neutral-900/60 p-4 flex items-center justify-center text-center text-sm">Analytics</div>
-            </div>
-          </div>
-          <div class="absolute -bottom-6 -right-6 hidden md:block">
-            <div class="px-4 py-2 rounded-xl bg-neutral-900/90 border border-neutral-700 text-xs text-neutral-300 shadow-lg">
-              <span class="text-emerald-400 font-semibold">7+ yrs</span> experience at scale
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="hero">
+  <div class="hero-content">
+    <h2>Agency KOL Profesional Sejak 2022</h2>
+    <p>RH Management - PT Berkat Melimpah Nusantara, membantu brand bekerja sama dengan KOL Nano, Mikro, hingga Mega.</p>
+    <button class="btn" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Hubungi Kami</button>
+  </div>
+</section>
 
-  <!-- Services -->
-  <section id="services" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="text-2xl md:text-3xl font-bold">Services</h2>
-    <p class="mt-2 text-neutral-400">End-to-end support yang bisa dipilih sesuai kebutuhan.</p>
-    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">Marketplace Operations</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Listing, WMS, SLA, return/refund, dan performance health.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">Content & Social</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Kalender konten, produksi foto/video, community & live.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">Performance Marketing</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Iklan Shopee/Tokopedia & Meta/Google dengan target ROAS.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">Data & Reporting</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Dashboard KPI, cohort, churn, dan analisis channel.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">KOL & Partnership</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Strategi kolaborasi, seleksi talent, kontrak, dan pelaksanaan.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-      <div class="group rounded-3xl border border-neutral-800 p-6 hover:border-emerald-600/40 hover:bg-emerald-500/5 transition">
-        <div class="flex items-center justify-between">
-          <h3 class="font-semibold text-lg">Consulting & Training</h3>
-          <span class="text-xs px-2 py-1 rounded-full bg-neutral-800 border border-neutral-700">Pkg</span>
-        </div>
-        <p class="mt-3 text-sm text-neutral-300">Audit toko, SOP, playbook, dan kelas tim internal.</p>
-        <a href="#contact" class="mt-5 inline-block text-sm text-emerald-300 hover:text-emerald-200">Get proposal →</a>
-      </div>
-    </div>
-  </section>
+<section class="section fade-in" id="about">
+  <h3>Tentang RH Management</h3>
+  <p>RH Management adalah agency KOL berdiri sejak 2022, legal PT Berkat Melimpah Nusantara. Founder: Hana Caroline | Co-Founder: Rio Julio Hutagalung. Kami fokus membantu brand menjalin kerja sama dengan influencer terbaik untuk meningkatkan engagement dan awareness.</p>
+</section>
 
-  <!-- Work -->
-  <section id="work" class="max-w-6xl mx-auto px-4 py-16">
-    <h2 class="text-2xl md:text-3xl font-bold">Selected Work</h2>
-    <p class="mt-2 text-neutral-400">Beberapa proyek & hasil nyata (ringkas).</p>
-    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Placeholder cards -->
-      <div class="rounded-3xl overflow-hidden border border-neutral-800 bg-neutral-900">
-        <div class="aspect-video bg-neutral-800"></div>
-        <div class="p-4">
-          <div class="text-sm text-neutral-400">Case Study #1</div>
-          <div class="font-medium mt-1">+XX% GMV in 60 days</div>
-          <div class="text-xs mt-1 text-neutral-500">Ops • Ads • Content</div>
-        </div>
-      </div>
-      <div class="rounded-3xl overflow-hidden border border-neutral-800 bg-neutral-900">
-        <div class="aspect-video bg-neutral-800"></div>
-        <div class="p-4">
-          <div class="text-sm text-neutral-400">Case Study #2</div>
-          <div class="font-medium mt-1">+XX% Conversion</div>
-          <div class="text-xs mt-1 text-neutral-500">Catalog • A/B Test</div>
-        </div>
-      </div>
-      <div class="rounded-3xl overflow-hidden border border-neutral-800 bg-neutral-900">
-        <div class="aspect-video bg-neutral-800"></div>
-        <div class="p-4">
-          <div class="text-sm text-neutral-400">Case Study #3</div>
-          <div class="font-medium mt-1">-XX% Return Rate</div>
-          <div class="text-xs mt-1 text-neutral-500">Ops • SOP</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="section fade-in" id="features">
+  <h3>Fitur Utama</h3>
+  <div class="features">
+    <div class="card">KOL Nano & Mikro</div>
+    <div class="card">Kampanye Kreatif</div>
+    <div class="card">Social Media Strategy</div>
+    <div class="card">Brand Engagement</div>
+  </div>
+</section>
 
-  <!-- About -->
-  <section id="about" class="max-w-6xl mx-auto px-4 py-16">
-    <div class="grid md:grid-cols-3 gap-8 items-start">
-      <div class="md:col-span-2">
-        <h2 class="text-2xl md:text-3xl font-bold">About RH Management</h2>
-        <p class="mt-3 text-neutral-300">
-          Kami adalah tim kecil dengan pengalaman lintas-fungsi di e-commerce Indonesia: project marketing, seller operations, social media, dan community. Kami fokus pada eksekusi yang rapi, insight yang jelas, dan komunikasi yang cepat.
-        </p>
-        <ul class="mt-5 grid sm:grid-cols-2 gap-3 text-sm text-neutral-300">
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Berpengalaman 3+ tahun</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> mengelola ribuan KOL</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Pernah memimpin webinar & kelas seller</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Terbiasa cross-functional</li>
-        </ul>
-      </div>
-      <div class="rounded-3xl border border-neutral-800 p-5 bg-neutral-900">
-        <div class="text-sm text-neutral-400">Key Capabilities</div>
-        <ul class="mt-3 space-y-2 text-sm">
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Ops excellence</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Cost control</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Conversion uplift</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Retention</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Playbook & SOP</li>
-          <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Cohort analytics</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+<section class="section fade-in" id="portfolio">
+  <h3>Portfolio KOL</h3>
+  <div class="slider">
+    <div class="card"><img src="https://source.unsplash.com/300x300/?person,1" alt="KOL A"><p>Influencer A</p></div>
+    <div class="card"><img src="https://source.unsplash.com/300x300/?person,2" alt="KOL B"><p>Influencer B</p></div>
+    <div class="card"><img src="https://source.unsplash.com/300x300/?person,3" alt="KOL C"><p>Influencer C</p></div>
+    <div class="card"><img src="https://source.unsplash.com/300x300/?person,4" alt="KOL D"><p>Influencer D</p></div>
+  </div>
+</section>
 
-  <!-- Contact -->
-  <section id="contact" class="max-w-6xl mx-auto px-4 py-16">
-    <div class="rounded-3xl border border-neutral-800 p-6 bg-neutral-900">
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="md:col-span-2">
-          <h2 class="text-2xl md:text-3xl font-bold">Let’s work together</h2>
-          <p class="mt-2 text-neutral-300">Ceritakan target dan kendalanya, biar kami bantu rancang solusinya.</p>
-          <form class="mt-6 grid sm:grid-cols-2 gap-4" onsubmit="event.preventDefault();">
-            <input class="px-4 py-3 rounded-2xl bg-neutral-950 border border-neutral-800 focus:outline-none focus:border-emerald-500" placeholder="Nama" />
-            <input class="px-4 py-3 rounded-2xl bg-neutral-950 border border-neutral-800 focus:outline-none focus:border-emerald-500" placeholder="Email / WhatsApp" />
-            <input class="sm:col-span-2 px-4 py-3 rounded-2xl bg-neutral-950 border border-neutral-800 focus:outline-none focus:border-emerald-500" placeholder="Perusahaan / Brand" />
-            <textarea rows="4" class="sm:col-span-2 px-4 py-3 rounded-2xl bg-neutral-950 border border-neutral-800 focus:outline-none focus:border-emerald-500" placeholder="Ceritakan kebutuhanmu (ops, iklan, konten, dll)"></textarea>
-            <div class="sm:col-span-2 flex items-center gap-3">
-              <a href="mailto:contact@rhmanagement.com" class="px-5 py-3 rounded-2xl bg-emerald-500 text-neutral-900 font-semibold hover:bg-emerald-400">Kirim via Email</a>
-              <a href="https://wa.me/6281217177114" target="_blank" class="px-5 py-3 rounded-2xl border border-neutral-700 hover:border-neutral-500">Chat WhatsApp</a>
-            </div>
-          </form>
-        </div>
-        <div class="space-y-3 text-sm text-neutral-300">
-          <div class="p-4 rounded-2xl bg-neutral-950 border border-neutral-800">
-            <div class="text-neutral-400 text-xs">Primary Email</div>
-            <div class="font-medium">contact@rhmanagement.com</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-neutral-950 border border-neutral-800">
-            <div class="text-neutral-400 text-xs">Office</div>
-            <div>BSD / Tangerang Selatan — Indonesia</div>
-          </div>
-          <div class="p-4 rounded-2xl bg-neutral-950 border border-neutral-800">
-            <div class="text-neutral-400 text-xs">Availability</div>
-            <div>Mon–Sat, 09:00–18:00 WIB</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="section fade-in" id="services">
+  <h3>Services</h3>
+  <div class="services">
+    <div class="card">Brand Collaboration</div>
+    <div class="card">Content Creation</div>
+    <div class="card">Marketing Consultation</div>
+    <div class="card">Event Activation</div>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="border-t border-neutral-800">
-    <div class="max-w-6xl mx-auto px-4 py-10 text-sm text-neutral-400 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div>© <span id="y"></span> PT Berkat Melimpah Nusantara. All rights reserved.</div>
-      <div class="flex items-center gap-4">
-        <a href="#" class="hover:text-neutral-200">Privacy</a>
-        <a href="#" class="hover:text-neutral-200">Terms</a>
-      </div>
-    </div>
-  </footer>
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+<section class="section fade-in" id="testimonials">
+  <h3>Testimonials</h3>
+  <div class="slider testimonials">
+    <div class="card"><p>"RH Management bantu brand kami naik engagement 3x lipat!"</p><p>- Client A</p></div>
+    <div class="card"><p>"Kolaborasi influencer berjalan sangat lancar dan profesional."</p><p>- Client B</p></div>
+    <div class="card"><p>"Konten kreatifnya luar biasa, sangat rekomendasi."</p><p>- Client C</p></div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <h3>Kontak Kami</h3>
+  <?php if($success) echo "<p class='success-msg'>$success</p>"; ?>
+  <?php if($error) echo "<p class='error-msg'>$error</p>"; ?>
+  <form method="post" action="#contact">
+    <input type="text" name="nama" placeholder="Nama Anda" required>
+    <input type="email" name="email" placeholder="Email Anda" required>
+    <textarea name="pesan" rows="5" placeholder="Pesan Anda" required></textarea>
+    <button type="submit">Kirim Pesan</button>
+  </form>
+</section>
+
+<div class="wa-button" onclick="window.open('https://wa.me/6285121048961', '_blank')">Chat WA</div>
+
+<footer>
+  &copy; 2025 RH Management - PT Berkat Melimpah Nusantara. All rights reserved.
+</footer>
+
+<script>
+// Smooth scroll
+document.querySelectorAll('nav a').forEach(anchor => {
+  anchor.addEventListener('click', function(e){
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Fade in animation on scroll
+const faders = document.querySelectorAll('.fade-in');
+const appearOptions = { threshold:0.2 };
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    entry.classList.add('appear');
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader=>{appearOnScroll.observe(fader)});
+</script>
+
 </body>
 </html>
