@@ -8,10 +8,14 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Import font premium */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
     /* Preloader Style */
     #preloader {
-      opacity: 1;
-      transition: opacity 0.5s ease;
+      opacity: 0;
+      transform: translateY(20px); /* muncul dari sedikit bawah */
+      transition: opacity 0.8s ease, transform 0.8s ease;
       position: fixed;
       inset: 0;
       z-index: 9999;
@@ -19,10 +23,30 @@
       align-items: center;
       justify-content: center;
       background: #0f172a;
+      padding: 1rem;
+      text-align: center;
     }
+
+    #preloader.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     #preloader.fade-out {
       opacity: 0;
       pointer-events: none;
+    }
+
+    #preloader h1 {
+      font-family: 'Montserrat', sans-serif; /* font premium */
+    }
+
+    /* Responsive font untuk HP */
+    @media (max-width: 640px) {
+      #preloader h1 {
+        font-size: 3rem;
+        line-height: 1.2;
+      }
     }
   </style>
 </head>
@@ -30,7 +54,7 @@
 
   <!-- Preloader -->
   <div id="preloader">
-    <h1 class="text-6xl sm:text-7xl font-extrabold tracking-wider animate-pulse text-white text-center">
+    <h1 class="text-6xl sm:text-7xl font-extrabold tracking-wider text-white text-center">
       RH Management
     </h1>
   </div>
@@ -73,7 +97,7 @@
               <a href="work.html" class="px-5 py-3 rounded-2xl border border-neutral-700 hover:border-neutral-500">Lihat Portfolio</a>
             </div>
             <div class="mt-8 flex items-center gap-6 text-sm text-neutral-400">
-              <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span>Campign</div>
+              <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-400"></span>Campaign</div>
               <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-sky-400"></span>Partner</div>
               <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-fuchsia-400"></span>Social Media Ads</div>
             </div>
@@ -140,7 +164,8 @@
 
     const preloader = document.getElementById('preloader');
     window.addEventListener('load', () => {
-      setTimeout(() => preloader.classList.add('fade-out'), 1500);
+      preloader.classList.add('show'); // animasi fade-in
+      setTimeout(() => preloader.classList.add('fade-out'), 1800); // fade-out otomatis
     });
   </script>
 
