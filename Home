@@ -28,9 +28,12 @@
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
   <!-- Preloader -->
-  <div id="preloader">
-    <h1 class="text-6xl md:text-7xl font-extrabold tracking-wider animate-pulse text-white">RH Management</h1>
-  </div>
+  <div id="preloader" class="flex items-center justify-center fixed inset-0 z-50 bg-neutral-950">
+  <h1 class="text-6xl sm:text-7xl font-extrabold tracking-wider animate-pulse text-white text-center">
+    RH Management
+  </h1>
+</div>
+
 
   <!-- Header -->
   <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
@@ -143,3 +146,4 @@
 
 </body>
 </html>
+
