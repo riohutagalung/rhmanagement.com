@@ -1,17 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Work — RH Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
-  <main>
-    <section id="work" class="max-w-6xl mx-auto px-4 py-24 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold">Our Work.</h2>
-        <p class="mt-4 text-neutral-400">Portofolio keren kami sedang disiapkan. Sabar ya!</p>
-        <a href="index.html" class="mt-8 inline-block px-5 py-3 rounded-xl bg-emerald-500 text-neutral-900 font-semibold hover:bg-emerald-400">Kembali ke Home</a>
-    </section>
-  </main>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-block h-3 w-3 rounded-full bg-emerald-400"></span>
+        <span class="font-semibold tracking-wide">RH Management</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm text-neutral-300">
+        <a href="services.html" class="hover:text-white">Services</a>
+        <a href="work.html" class="hover:text-white">Work</a>
+        <a href="about.html" class="hover:text-white">About</a>
+        <a href="contact.html" class="hover:text-white">Contact</a>
+        <a href="mailto:contact@rhmanagement.com" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">Let's Talk</a>
+      </div>
+    </nav>
+  </header>
 
-  </body>
+  <!-- Hero / Banner -->
+  <section class="relative overflow-hidden text-center py-24">
+    <div class="absolute inset-0" style="background:
+      radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
+      radial-gradient(circle at 80% 30%, #22d3ee22, transparent 40%);
+    "></div>
+    <div class="relative max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Our Work</h2>
+      <p class="mt-4 text-neutral-300 text-lg">Portofolio keren kami sedang disiapkan, tapi beberapa project sudah bisa dicek di bawah.</p>
+    </div>
+  </section>
+
+  <!-- Work Grid -->
+  <section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project1.jpg" alt="Shopee Brand Campaign" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">Shopee Brand Campaign</div>
+      </div>
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project2.jpg" alt="TikTok Shop Launch" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">TikTok Shop Launch</div>
+      </div>
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project3.jpg" alt="Instagram Content Strategy" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">Instagram Content Strategy</div>
+      </div>
+      <!-- Tambah proyek lain di sini -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black border-t border-neutral-800 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <h3 class="font-bold text-lg">Stay in touch</h3>
+          <p class="mt-3 text-sm text-neutral-400">Dapetin insight industri terbaru & update dari kita.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">Quick Links</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="services.html" class="text-neutral-400 hover:text-white">Services</a></li>
+            <li><a href="work.html" class="text-neutral-400 hover:text-white">Work</a></li>
+            <li><a href="about.html" class="text-neutral-400 hover:text-white">About Us</a></li>
+            <li><a href="contact.html" class="text-neutral-400 hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">About Us</h3>
+          <p class="mt-3 text-sm text-neutral-400 leading-relaxed">
+            RH Management adalah agensi pertumbuhan untuk brand dan kreator, lahir sejak 2022. Dengan strategi berbasis data dan eksekusi yang cepat, kami siap jadi partner andalanmu di dunia digital.
+          </p>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-neutral-800 text-sm text-neutral-500 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>© <span id="y"></span> PT Berkat Melimpah Nusantara. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-neutral-200">Privacy Policy</a>
+          <a href="#" class="hover:text-neutral-200">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+
+</body>
 </html>
