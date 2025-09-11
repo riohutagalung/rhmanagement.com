@@ -1,15 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us — RH Management</title>
+  <meta name="description" content="RH Management, agensi pertumbuhan untuk brand dan kreator sejak 2022." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="inline-block h-3 w-3 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-semibold tracking-wide">RH Management</span>
+      </a>
+      <div class="hidden md:flex items-center gap-6 text-sm text-neutral-300">
+        <a href="services.html" class="hover:text-white">Services</a>
+        <a href="work.html" class="hover:text-white">Work</a>
+        <a href="about.html" class="hover:text-white">About</a>
+        <a href="contact.html" class="hover:text-white">Contact</a>
+        <a href="mailto:contact@rhmanagement.com" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">Let's Talk</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero / Banner -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0" style="background:
+      radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
+      radial-gradient(circle at 80% 30%, #22d3ee22, transparent 40%);
+    "></div>
+    <div class="relative max-w-6xl mx-auto px-4 py-16 text-center">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Tentang RH Management</h2>
+      <p class="mt-4 text-neutral-300 max-w-2xl mx-auto text-lg">Agensi pertumbuhan untuk brand & kreator sejak 2022, fokus ke hasil nyata dan strategi berbasis data.</p>
+    </div>
+  </section>
+
+  <!-- About Content -->
   <main>
     <section id="about" class="max-w-6xl mx-auto px-4 py-16">
       <div class="grid md:grid-cols-3 gap-8 items-start">
         <div class="md:col-span-2">
-          <h2 class="text-3xl md:text-4xl font-bold">The Growth Squad.</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-white">The Growth Squad.</h2>
           <p class="mt-4 text-neutral-300">
             Kita bukan agensi raksasa. Cuma sekumpulan expert e-commerce yang udah kenyang pengalaman di industri. Cara kerja kita sat-set, transparan, dan selalu fokus ke hasil. Kami percaya setiap brand punya potensi unik, dan tugas kami adalah membukanya lebar-lebar di dunia digital.
           </p>
@@ -22,18 +57,56 @@
         </div>
         <div class="rounded-3xl border border-neutral-800 p-5 bg-neutral-900">
           <div class="text-sm text-neutral-400">Key Capabilities</div>
-          <ul class="mt-3 space-y-2 text-sm">
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Ops Excellence</li>
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Cost Control</li>
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Conversion Uplift</li>
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Retention</li>
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Playbook & SOP</li>
-            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Cohort Analytics</li>
+          <ul class="mt-3 space-y-2 text-sm text-neutral-300">
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Ops Excellence</li>
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Cost Control</li>
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Conversion Uplift</li>
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Retention</li>
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Playbook & SOP</li>
+            <li class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Cohort Analytics</li>
           </ul>
         </div>
       </div>
     </section>
   </main>
-  
-  </body>
+
+  <!-- Footer -->
+  <footer class="bg-black border-t border-neutral-800 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <h3 class="font-bold text-lg">Stay in touch</h3>
+          <p class="mt-3 text-sm text-neutral-400">Dapetin insight industri terbaru & update dari kita.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">Quick Links</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="services.html" class="text-neutral-400 hover:text-white">Services</a></li>
+            <li><a href="work.html" class="text-neutral-400 hover:text-white">Work</a></li>
+            <li><a href="about.html" class="text-neutral-400 hover:text-white">About Us</a></li>
+            <li><a href="contact.html" class="text-neutral-400 hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">About Us</h3>
+          <p class="mt-3 text-sm text-neutral-400 leading-relaxed">
+            RH Management adalah agensi pertumbuhan untuk brand dan kreator, lahir sejak 2022. Dengan strategi berbasis data dan eksekusi yang cepat, kami siap jadi partner andalanmu di dunia digital.
+          </p>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-neutral-800 text-sm text-neutral-500 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>© <span id="y"></span> PT Berkat Melimpah Nusantara. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-neutral-200">Privacy Policy</a>
+          <a href="#" class="hover:text-neutral-200">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+
+</body>
 </html>
