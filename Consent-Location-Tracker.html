@@ -1,0 +1,95 @@
+<!doctype html>
+<!--
+Consent-Location-Tracker.html
+Single-file demo: opt-in location sharing + map viewer.
+USAGE NOTES:
+- This is a demo/prototype. Do NOT use to track people without explicit consent.
+- Versi ini dibuat full client-side (web gratis), data lokasi hanya tampil lokal di browser.
+- Tanpa backend. Jadi tidak ada penyimpanan/akses bersama.
+- Privacy: hanya device sendiri yang bisa lihat lokasi.
+-->
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Demo: Consent-based Location Sharing (No Backend)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;padding:0}
+    header{padding:12px;background:#0b74de;color:white}
+    main{display:flex;gap:12px;padding:12px}
+    #controls{width:320px}
+    #map{flex:1;height:70vh;border:1px solid #ddd}
+    label{display:block;margin-top:8px}
+    button{margin-top:8px;padding:8px 12px;border-radius:6px}
+    .note{font-size:13px;color:#555}
+  </style>
+</head>
+<body>
+  <header>
+    <strong>Consent Location Tracker — Demo (Lokal)</strong>
+    <div style="font-size:13px;opacity:.9">Hanya untuk orang yang setuju berbagi lokasi. Data tidak dikirim keluar.</div>
+  </header>
+  <main>
+    <section id="controls">
+      <h3>Pengaturan Akun</h3>
+      <label>Nama publik (akan terlihat): <input id="name" value="User A" /></label>
+      <label>Nomor Handphone (unik): <input id="phone" value="08123456789" /></label>
+      <div style="margin-top:10px">
+        <button id="startShare">Tampilkan Lokasi Saya</button>
+        <button id="stopShare">Sembunyikan</button>
+      </div>
+      <p class="note">Browser akan meminta izin lokasi. Lokasi hanya tampil di peta lokal ini.</p>
+    </section>
+
+    <div id="map"></div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // ---- Map setup ----
+    const map = L.map('map').setView([0,0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    let currentMarker = null;
+    let sharingInterval = null;
+
+    function startSharing(){
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      if(!navigator.geolocation){ alert('Geolocation API tidak tersedia'); return }
+
+      const updateLocation = () => {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const {latitude:lat, longitude:lon} = pos.coords;
+          if(currentMarker) map.removeLayer(currentMarker);
+          currentMarker = L.marker([lat, lon]).addTo(map)
+            .bindPopup(`${name} (HP: ${phone})\n${new Date().toLocaleString()}`).openPopup();
+          map.setView([lat, lon], 15);
+        }, err => alert('Izin lokasi ditolak atau error: ' + err.message), {enableHighAccuracy:true});
+      };
+
+      updateLocation();
+      sharingInterval = setInterval(updateLocation, 15000);
+      document.getElementById('startShare').disabled = true;
+      document.getElementById('stopShare').disabled = false;
+    }
+
+    function stopSharing(){
+      if(sharingInterval) clearInterval(sharingInterval);
+      if(currentMarker) { map.removeLayer(currentMarker); currentMarker = null; }
+      sharingInterval = null;
+      document.getElementById('startShare').disabled = false;
+      document.getElementById('stopShare').disabled = true;
+    }
+
+    document.getElementById('startShare').addEventListener('click', startSharing);
+    document.getElementById('stopShare').addEventListener('click', stopSharing);
+    document.getElementById('stopShare').disabled = true;
+
+    console.log('Demo lokal siap. Ingat: hanya untuk penggunaan pribadi dengan persetujuan.');
+  </script>
+</body>
+</html>
