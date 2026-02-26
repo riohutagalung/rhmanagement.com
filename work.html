@@ -29,7 +29,6 @@
   </style>
 </head>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const supabaseUrl = "https://buewhelfrkkjbpsvhcjj.supabase.co";
 const supabaseKey = "sb_publishable_rkrQXr7k16ITYg2POkImXA_jqOx11F0";
@@ -45,16 +44,20 @@ async function loadHomepage() {
     .single();
 
   if (error) {
-    console.log("Error:", error);
+    console.log(error);
     return;
   }
 
   if (data) {
-    document.getElementById("hero-title").innerText = data.title;
-    document.getElementById("hero-desc").innerText = data.description;
+    const title = document.getElementById("hero-title");
+    const desc = document.getElementById("hero-desc");
+    const highlight = document.getElementById("hero-highlight");
 
-    if (data.highlight_point) {
-      document.getElementById("hero-highlight").innerHTML =
+    if (title) title.innerText = data.title;
+    if (desc) desc.innerText = data.description;
+
+    if (highlight && data.highlight_point) {
+      highlight.innerHTML =
         '<div class="flex items-center gap-2">' +
         '<span class="h-2 w-2 rounded-full bg-emerald-400"></span>' +
         data.highlight_point +
@@ -156,4 +159,5 @@ loadHomepage();
 
 </body>
 </html>
+
 
