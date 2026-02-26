@@ -61,62 +61,73 @@ transform: scale(1.1);
 }
 </style>
 </head>
-<body>
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7"></script>
 
-  <!-- isi website kamu di sini -->
+<script>
+window.addEventListener("DOMContentLoaded", async function () {
 
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7"></script>
+  const supabaseUrl = "https://buewhelfrkkjbpsvhcjj.supabase.co";
+  const supabaseKey = "sb_publishable_rkrQXr7k16ITYg2POkImXA_jqOx11F0";
 
-  <!-- Script kamu -->
-  <script>
-  window.addEventListener("DOMContentLoaded", async function () {
+  if (!window.supabase) {
+    console.error("Supabase library gagal load");
+    return;
+  }
 
-    const supabaseUrl = "https://buewhelfrkkjbpsvhcjj.supabase.co";
-    const supabaseKey = "sb_publishable_rkrQXr7k16ITYg2POkImXA_jqOx11F0";
+  const { createClient } = window.supabase;
+  const db = createClient(supabaseUrl, supabaseKey);
 
-    if (typeof supabase === "undefined") {
-      console.error("Supabase library gagal load");
-      return;
-    }
-
-    const { createClient } = supabase;
-    const db = createClient(supabaseUrl, supabaseKey);
-
-    async function loadHomepage() {
+  async function loadHomepage() {
+    try {
       const { data, error } = await db
         .from("homepage_content")
         .select("*")
-        .limit(1)
-        .single();
+        .limit(1);
 
       if (error) {
-        console.log(error);
+        console.error("Supabase error:", error.message);
         return;
       }
 
-      if (data) {
-        const title = document.getElementById("hero-title");
-        const desc = document.getElementById("hero-desc");
-        const highlight = document.getElementById("hero-highlight");
-
-        if (title) title.innerText = data.title;
-        if (desc) desc.innerText = data.description;
-
-        if (highlight && data.highlight_point) {
-          highlight.innerHTML =
-            '<div class="flex items-center gap-2">' +
-            '<span class="h-2 w-2 rounded-full bg-emerald-400"></span>' +
-            data.highlight_point +
-            '</div>';
-        }
+      if (!data || data.length === 0) {
+        console.warn("Table homepage_content kosong");
+        return;
       }
+
+      const row = data[0];
+
+      const title = document.getElementById("hero-title");
+      const desc = document.getElementById("hero-desc");
+      const highlight = document.getElementById("hero-highlight");
+
+      if (title && row.title) {
+        title.innerText = row.title;
+      }
+
+      if (desc && row.description) {
+        desc.innerText = row.description;
+      }
+
+      if (highlight && row.highlight_point) {
+        highlight.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+            ${row.highlight_point}
+          </div>
+        `;
+      }
+
+      console.log("Homepage loaded:", row);
+
+    } catch (err) {
+      console.error("Unexpected error:", err);
     }
+  }
 
-    loadHomepage();
-  });
-  </script>
-
+  await loadHomepage();
+});
+</script>
 </body>
 </html>
 
@@ -282,6 +293,7 @@ setTimeout(() => preloader.classList.add('fade-out'), 1800);
 
 </body>
 </html>
+
 
 
 
