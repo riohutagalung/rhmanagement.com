@@ -28,6 +28,44 @@
     }
   </style>
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = "https://buewhelfrkkjbpsvhcjj.supabase.co";
+const supabaseKey = "sb_publishable_rkrQXr7k16ITYg2POkImXA_jqOx11F0";
+
+const { createClient } = supabase;
+const db = createClient(supabaseUrl, supabaseKey);
+
+async function loadHomepage() {
+  const { data, error } = await db
+    .from("homepage_content")
+    .select("*")
+    .limit(1)
+    .single();
+
+  if (error) {
+    console.log("Error:", error);
+    return;
+  }
+
+  if (data) {
+    document.getElementById("hero-title").innerText = data.title;
+    document.getElementById("hero-desc").innerText = data.description;
+
+    if (data.highlight_point) {
+      document.getElementById("hero-highlight").innerHTML =
+        '<div class="flex items-center gap-2">' +
+        '<span class="h-2 w-2 rounded-full bg-emerald-400"></span>' +
+        data.highlight_point +
+        '</div>';
+    }
+  }
+}
+
+loadHomepage();
+</script>
+  
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
   <!-- Header -->
@@ -118,3 +156,4 @@
 
 </body>
 </html>
+
