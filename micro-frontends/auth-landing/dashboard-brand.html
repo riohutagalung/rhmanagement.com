@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Campaign Suite | RH Management Corp</title>
+    
+    <script src="auth.js"></script>
+    <script>
+        RHAuth.checkProtection('BRAND');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #09090b;
+            --bg-card: #18181b;
+            --border: #27272a;
+            --text-primary: #f3f4f6;
+            --text-soft: #9ca3af;
+            --accent-purple: #818cf8;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 22px;
+            color: var(--accent-purple);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center; gap: 10px;
+        }
+
+        .nav-menu { list-style: none; flex-grow: 1; }
+        .nav-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center; gap: 12px;
+            color: var(--text-soft);
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(129, 140, 248, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 { font-family: 'Plus Jakarta Sans'; font-size: 28px; }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .escrow-summary {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .escrow-value h3 { color: var(--text-soft); font-size: 14px; margin-bottom: 5px; }
+        .escrow-value .amount { font-size: 32px; font-weight: 700; color: white; }
+
+        .btn-purple {
+            background-color: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-purple:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .campaign-mini-status {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+        .status-box p { font-size: 22px; font-weight: 700; margin-top: 5px; }
+
+        .section-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .section-container h2 { font-size: 20px; font-family: 'Plus Jakarta Sans'; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        .form-row { display: flex; gap: 20px; margin-bottom: 20px; }
+        .form-group { flex: 1; }
+        .form-group label { display: block; color: var(--text-soft); margin-bottom: 8px; font-size: 14px; }
+        .form-group input, .form-group select {
+            width: 100%;
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            outline: none;
+        }
+        .form-group input:focus { border-color: var(--accent-purple); }
+
+        .kol-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .kol-row:last-child { border-bottom: none; }
+        
+        .kol-meta { display: flex; align-items: center; gap: 12px; }
+        .avatar-stub { width: 40px; height: 40px; background: #3f3f46; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+        
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-live { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+        .status-done { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <i class="fas fa-briefcase"></i> RH BRAND
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item active"><i class="fas fa-rectangle-list"></i> Campaigns</li>
+            <li class="nav-item"><i class="fas fa-plus-circle"></i> Create Brief</li>
+            <li class="nav-item"><i class="fas fa-vault"></i> Escrow Locked</li>
+            <li class="nav-item"><i class="fas fa-file-invoice-dollar"></i> Billing & Tenor</li>
+        </ul>
+        <div class="nav-item" style="margin-top: auto; color: #ef4444;" onclick="RHAuth.logout()">
+            <i class="fas fa-right-from-bracket"></i> Logout
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="header">
+            <div>
+                <h1>Samsung Indonesia Suite</h1>
+                <p style="color: var(--text-soft);">Kelola kampanye marketing dan amankan dana rekber Anda.</p>
+            </div>
+            <div>
+                <p style="font-weight: 600; text-align: right;">Samsung Corporate</p>
+                <p style="font-size: 12px; color: var(--accent-green); text-align: right;"><i class="fas fa-circle-check"></i> Verified Brand (H+45 Approved)</p>
+            </div>
+        </div>
+
+        <div class="brand-grid">
+            <div class="escrow-summary">
+                <div class="escrow-value">
+                    <h3>Dana Terkunci di Rekber (Escrow)</h3>
+                    <p class="amount">Rp 240.000.000</p>
+                </div>
+                <button class="btn-purple"><i class="fas fa-wallet"></i> Top Up & Lock Dana</button>
+            </div>
+
+            <div class="campaign-mini-status">
+                <div class="status-box">
+                    <span style="color: var(--text-soft); font-size: 13px;">KOL Disewa</span>
+                    <p style="color: white;">12 Talent</p>
+                </div>
+                <div style="width: 1px; height: 40px; background-color: var(--border);"></div>
+                <div class="status-box">
+                    <span style="color: var(--text-soft); font-size: 13px;">Konten Live</span>
+                    <p style="color: var(--accent-blue);">8 Post</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <h2><i class="fas fa-bullhorn" style="color: var(--accent-purple);"></i> Launch New Campaign Brief</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Judul Campaign</label>
+                        <input type="text" placeholder="Contoh: Mega Launching Galaxy Fold 7">
+                    </div>
+                    <div class="form-group">
+                        <label>Platform Utama</label>
+                        <select>
+                            <option>TikTok Video</option>
+                            <option>Instagram Reels</option>
+                            <option>YouTube Shorts</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Total Alokasi Budget Rekber (Rp)</label>
+                        <input type="number" placeholder="Contoh: 50000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Target Jumlah KOL</label>
+                        <input type="number" placeholder="Contoh: 5">
+                    </div>
+                </div>
+                <button type="button" class="btn-purple">Publish & Kirim ke Tim RH</button>
+            </form>
+        </div>
+
+        <div class="section-container">
+            <h2><i class="fas fa-users-viewfinder" style="color: var(--accent-blue);"></i> Monitoring Progress KOL</h2>
+            
+            <div class="kol-list" style="margin-top: 15px;">
+                <div class="kol-row">
+                    <div class="kol-meta">
+                        <div class="avatar-stub">TF</div>
+                        <div>
+                            <p style="font-weight: 600;">@tasyafarasya</p>
+                            <p style="font-size: 12px; color: var(--text-soft);">Instagram Reels — Review Gadget</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">Rp 120.000.000</p>
+                        <span class="badge-status status-live"><i class="fas fa-spinner fa-spin"></i> PROSES REVIEW VIDEO</span>
+                    </div>
+                </div>
+
+                <div class="kol-row">
+                    <div class="kol-meta">
+                        <div class="avatar-stub">JP</div>
+                        <div>
+                            <p style="font-weight: 600;">@jeromepolin</p>
+                            <p style="font-size: 12px; color: var(--text-soft);">TikTok Video — Unboxing Challenge</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: 600; margin-bottom: 5px;">Rp 50.000.000</p>
+                        <span class="badge-status status-done"><i class="fas fa-circle-check"></i> SELESAI (DANA RILIS)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
