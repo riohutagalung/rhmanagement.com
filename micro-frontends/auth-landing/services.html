@@ -9,6 +9,8 @@
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="auth.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
@@ -20,12 +22,16 @@
       color: #10b981;
       transform: scale(1.1);
     }
+    /* Modal Tab Styling */
+    .auth-tab.active {
+      border-color: #10b981;
+      color: #10b981;
+    }
   </style>
 </head>
 
 <body class="min-h-screen bg-neutral-950 text-neutral-100">
 
-<!-- HEADER TIDAK DIUBAH -->
 <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
 <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
 <a href="index.html" class="flex items-center gap-2 logo">
@@ -33,20 +39,26 @@
 <span class="font-semibold tracking-wide">RH Management</span>
 </a>
 
-<div class="hidden md:flex items-center gap-6 text-sm text-neutral-300">
+<div class="flex items-center gap-6 text-sm text-neutral-300">
+<div class="hidden md:flex items-center gap-6">
 <a href="services.html">Services</a>
 <a href="work.html">Work</a>
 <a href="about.html">About</a>
 <a href="contact.html">Contact</a>
+</div>
+
+<button onclick="toggleAuthModal(true)" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-300 border border-indigo-600/30 hover:bg-indigo-500/20 transition">
+  Client/KOL Portal
+</button>
+
 <a href="mailto:contact@rhmanagement.com"
-class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">
+class="hidden md:inline-block px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">
 Let's Talk
 </a>
 </div>
 </nav>
 </header>
 
-<!-- HERO -->
 <section class="relative overflow-hidden">
 <div class="absolute inset-0" style="background:
 radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
@@ -64,7 +76,6 @@ Tinggal pilih servis yang paling pas, atau serahin A-Z ke kita. Simple.
 </div>
 </section>
 
-<!-- SERVICES GRID (tidak diubah, cuma ditambah id) -->
 <section class="max-w-6xl mx-auto px-4 py-16">
 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -113,7 +124,49 @@ Biar tim internal makin jago.
 </div>
 </section>
 
-<!-- FOOTER 100% SAMA -->
+<div id="authModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div class="bg-neutral-900 border border-neutral-800 w-full max-w-md rounded-2xl overflow-hidden p-6 relative shadow-2xl">
+    
+    <button onclick="toggleAuthModal(false)" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-lg">&times;</button>
+    
+    <div class="flex border-b border-neutral-800 mb-6 text-sm font-semibold">
+      <button id="tabLogin" onclick="switchAuthMode('LOGIN')" class="auth-tab flex-1 pb-3 text-center border-b-2 active">Masuk Akun</button>
+      <button id="tabRegister" onclick="switchAuthMode('REGISTER')" class="auth-tab flex-1 pb-3 text-center border-b-2 border-transparent text-neutral-400">Daftar Baru</button>
+    </div>
+
+    <form id="authForm" class="space-y-4" onsubmit="handleAuthSubmit(event)">
+      
+      <div id="groupUsername" class="hidden">
+        <label class="block text-xs font-semibold text-neutral-400 mb-1">USERNAME / NAMA PERUSAHAAN</label>
+        <input id="authUsername" type="text" placeholder="Contoh: Shopee Corp / Ahmad Talent" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-neutral-400 mb-1">EMAIL ADDRESS</label>
+        <input id="authEmail" type="email" required placeholder="name@company.com" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-neutral-400 mb-1">PASSWORD</label>
+        <input id="authPassword" type="password" required placeholder="••••••••" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <div id="groupRole" class="hidden">
+        <label class="block text-xs font-semibold text-neutral-400 mb-1">DAFTAR SEBAGAI APA?</label>
+        <select id="authRole" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-neutral-200">
+          <option value="KOL">Talent / KOL Kreator</option>
+          <option value="BRAND">Klien / Brand Perusahaan</option>
+          <option value="ADMIN">Super Admin RH Management</option>
+        </select>
+      </div>
+
+      <button type="submit" id="btnAuthSubmit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-900 font-bold text-sm transition mt-2">
+        Masuk Dashboard
+      </button>
+    </form>
+  </div>
+</div>
+
 <footer class="bg-black border-t border-neutral-800 pt-16 pb-8">
 <div class="max-w-6xl mx-auto px-4">
 <div class="grid md:grid-cols-3 gap-12">
@@ -155,6 +208,62 @@ RH Management adalah agensi pertumbuhan untuk brand dan kreator, lahir sejak 202
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
 
+// ⚡ LOGIKA SISTEM POP-UP MODAL AUTHENTICATION (Ditambahkan dengan aman)
+let currentMode = 'LOGIN';
+
+function toggleAuthModal(isOpen) {
+  const modal = document.getElementById('authModal');
+  if(isOpen) {
+    modal.classList.remove('hidden');
+  } else {
+    modal.classList.add('hidden');
+  }
+}
+
+function switchAuthMode(mode) {
+  currentMode = mode;
+  const tabLogin = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  const groupUsername = document.getElementById('groupUsername');
+  const groupRole = document.getElementById('groupRole');
+  const btnSubmit = document.getElementById('btnAuthSubmit');
+
+  if(mode === 'LOGIN') {
+    tabLogin.classList.add('active', 'border-emerald-500', 'text-emerald-500');
+    tabRegister.classList.remove('active', 'border-emerald-500', 'text-emerald-500');
+    tabRegister.classList.add('text-neutral-400');
+    groupUsername.classList.add('hidden');
+    groupRole.classList.add('hidden');
+    btnSubmit.innerText = 'Masuk Dashboard';
+  } else {
+    tabRegister.classList.add('active', 'border-emerald-500', 'text-emerald-500');
+    tabLogin.classList.remove('active', 'border-emerald-500', 'text-emerald-500');
+    tabLogin.classList.add('text-neutral-400');
+    groupUsername.classList.remove('hidden');
+    groupRole.classList.remove('hidden');
+    btnSubmit.innerText = 'Buat Akun Sekarang';
+  }
+}
+
+async function handleAuthSubmit(event) {
+  event.preventDefault();
+  
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+  
+  if (currentMode === 'LOGIN') {
+    await RHAuth.login(email, password);
+  } else {
+    const username = document.getElementById('authUsername').value;
+    const role = document.getElementById('authRole').value;
+    const result = await RHAuth.register(username, email, password, role);
+    if(result) {
+      switchAuthMode('LOGIN');
+    }
+  }
+}
+
+// 🏛️ LOGIKA UTUH SEBELUMNYA (100% TIDAK DIUBAH)
 window.addEventListener("DOMContentLoaded", async function () {
 
 const { createClient } = window.supabase;

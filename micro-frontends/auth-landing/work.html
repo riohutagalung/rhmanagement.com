@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Work — RH Management</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
+  <link class="logo-icon" rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310b981'/%3E%3C/svg%3E">
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="auth.js"></script>
 
   <style>
     /* Efek hover untuk semua link navbar */
@@ -26,17 +28,203 @@
       color: #10b981;
       transform: scale(1.1);
     }
+
+    /* Modal Tab Styling */
+    .auth-tab.active {
+      border-color: #10b981;
+      color: #10b981;
+    }
   </style>
 </head>
-<body>
+<body class="min-h-screen bg-neutral-950 text-neutral-100">
 
-  <!-- isi website kamu di sini -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 logo">
+        <span class="inline-block h-3 w-3 rounded-full bg-emerald-400"></span>
+        <span class="font-semibold tracking-wide">RH Management</span>
+      </a>
+      <div class="flex items-center gap-6 text-sm text-neutral-300">
+        <div class="hidden md:flex items-center gap-6">
+          <a href="services.html">Services</a>
+          <a href="work.html">Work</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
 
-  <!-- Supabase CDN -->
+        <button onclick="toggleAuthModal(true)" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-300 border border-indigo-600/30 hover:bg-indigo-500/20 transition">
+          Client/KOL Portal
+        </button>
+
+        <a href="mailto:contact@rhmanagement.com" class="hidden md:inline-block px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">Let's Talk</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="relative overflow-hidden text-center py-24">
+    <div class="absolute inset-0" style="background:
+      radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
+      radial-gradient(circle at 80% 30%, #22d3ee22, transparent 40%);
+    "></div>
+    <div class="relative max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Our Work</h2>
+      <p class="mt-4 text-neutral-300 text-lg">Portofolio keren kami sedang disiapkan, tapi beberapa project sudah bisa dicek di bawah.</p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project1.jpg" alt="Shopee Brand Campaign" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">Shopee Brand Campaign</div>
+      </div>
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project2.jpg" alt="TikTok Shop Launch" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">TikTok Shop Launch</div>
+      </div>
+      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
+        <img src="images/project3.jpg" alt="Instagram Content Strategy" class="rounded-xl w-full h-64 object-cover">
+        <div class="mt-3 text-white font-semibold text-center">Instagram Content Strategy</div>
+      </div>
+    </div>
+  </section>
+
+  <div id="authModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-neutral-900 border border-neutral-800 w-full max-w-md rounded-2xl overflow-hidden p-6 relative shadow-2xl">
+      
+      <button onclick="toggleAuthModal(false)" class="absolute top-4 right-4 text-neutral-400 hover:text-white text-lg">&times;</button>
+      
+      <div class="flex border-b border-neutral-800 mb-6 text-sm font-semibold">
+        <button id="tabLogin" onclick="switchAuthMode('LOGIN')" class="auth-tab flex-1 pb-3 text-center border-b-2 active">Masuk Akun</button>
+        <button id="tabRegister" onclick="switchAuthMode('REGISTER')" class="auth-tab flex-1 pb-3 text-center border-b-2 border-transparent text-neutral-400">Daftar Baru</button>
+      </div>
+
+      <form id="authForm" class="space-y-4" onsubmit="handleAuthSubmit(event)">
+        
+        <div id="groupUsername" class="hidden">
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">USERNAME / NAMA PERUSAHAAN</label>
+          <input id="authUsername" type="text" placeholder="Contoh: Shopee Corp / Ahmad Talent" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">EMAIL ADDRESS</label>
+          <input id="authEmail" type="email" required placeholder="name@company.com" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">PASSWORD</label>
+          <input id="authPassword" type="password" required placeholder="••••••••" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div id="groupRole" class="hidden">
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">DAFTAR SEBAGAI APA?</label>
+          <select id="authRole" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-neutral-200">
+            <option value="KOL">Talent / KOL Kreator</option>
+            <option value="BRAND">Klien / Brand Perusahaan</option>
+            <option value="ADMIN">Super Admin RH Management</option>
+          </select>
+        </div>
+
+        <button type="submit" id="btnAuthSubmit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-900 font-bold text-sm transition mt-2">
+          Masuk Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-black border-t border-neutral-800 pt-16 pb-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <h3 class="font-bold text-lg">Stay in touch</h3>
+          <p class="mt-3 text-sm text-neutral-400">Dapetin insight industri terbaru & update dari kita.</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">Quick Links</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="services.html" class="text-neutral-400 hover:text-white">Services</a></li>
+            <li><a href="work.html" class="text-neutral-400 hover:text-white">Work</a></li>
+            <li><a href="about.html" class="text-neutral-400 hover:text-white">About Us</a></li>
+            <li><a href="contact.html" class="text-neutral-400 hover:text-white">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">About Us</h3>
+          <p class="mt-3 text-sm text-neutral-400 leading-relaxed">
+            RH Management adalah agensi pertumbuhan untuk brand dan kreator, lahir sejak 2022. Dengan strategi berbasis data dan eksekusi yang cepat, kami siap jadi partner andalanmu di dunia digital.
+          </p>
+        </div>
+      </div>
+      <div class="mt-16 pt-8 border-t border-neutral-800 text-sm text-neutral-500 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>© <span id="y"></span> PT Berkat Melimpah Nusantara. All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-neutral-200">Privacy Policy</a>
+          <a href="#" class="hover:text-neutral-200">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7"></script>
 
-  <!-- Script kamu -->
   <script>
+  let currentMode = 'LOGIN';
+
+  function toggleAuthModal(isOpen) {
+    const modal = document.getElementById('authModal');
+    if(isOpen) {
+      modal.classList.remove('hidden');
+    } else {
+      modal.classList.add('hidden');
+    }
+  }
+
+  function switchAuthMode(mode) {
+    currentMode = mode;
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const groupUsername = document.getElementById('groupUsername');
+    const groupRole = document.getElementById('groupRole');
+    const btnSubmit = document.getElementById('btnAuthSubmit');
+
+    if(mode === 'LOGIN') {
+      tabLogin.classList.add('active', 'border-emerald-500', 'text-emerald-500');
+      tabRegister.classList.remove('active', 'border-emerald-500', 'text-emerald-500');
+      tabRegister.classList.add('text-neutral-400');
+      groupUsername.classList.add('hidden');
+      groupRole.classList.add('hidden');
+      btnSubmit.innerText = 'Masuk Dashboard';
+    } else {
+      tabRegister.classList.add('active', 'border-emerald-500', 'text-emerald-500');
+      tabLogin.classList.remove('active', 'border-emerald-500', 'text-emerald-500');
+      tabLogin.classList.add('text-neutral-400');
+      groupUsername.classList.remove('hidden');
+      groupRole.classList.remove('hidden');
+      btnSubmit.innerText = 'Buat Akun Sekarang';
+    }
+  }
+
+  async function handleAuthSubmit(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+    
+    if (currentMode === 'LOGIN') {
+      await RHAuth.login(email, password);
+    } else {
+      const username = document.getElementById('authUsername').value;
+      const role = document.getElementById('authRole').value;
+      const result = await RHAuth.register(username, email, password, role);
+      if(result) {
+        switchAuthMode('LOGIN');
+      }
+    }
+  }
+
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // 🏛️ LOGIKA UTUH SEBELUMNYA (100% TIDAK DIUBAH)
   window.addEventListener("DOMContentLoaded", async function () {
 
     const supabaseUrl = "https://buewhelfrkkjbpsvhcjj.supabase.co";
@@ -86,98 +274,3 @@
 
 </body>
 </html>
-  
-<body class="min-h-screen bg-neutral-950 text-neutral-100">
-
-  <!-- Header -->
-  <header class="sticky top-0 z-50 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
-    <nav class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2 logo">
-        <span class="inline-block h-3 w-3 rounded-full bg-emerald-400"></span>
-        <span class="font-semibold tracking-wide">RH Management</span>
-      </a>
-      <div class="hidden md:flex items-center gap-6 text-sm text-neutral-300">
-        <a href="services.html">Services</a>
-        <a href="work.html">Work</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="mailto:contact@rhmanagement.com" class="px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-600/30 hover:bg-emerald-500/20">Let's Talk</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Hero / Banner -->
-  <section class="relative overflow-hidden text-center py-24">
-    <div class="absolute inset-0" style="background:
-      radial-gradient(circle at 20% 10%, #10b98133, transparent 40%),
-      radial-gradient(circle at 80% 30%, #22d3ee22, transparent 40%);
-    "></div>
-    <div class="relative max-w-6xl mx-auto px-4">
-      <h2 class="text-4xl md:text-5xl font-extrabold text-white">Our Work</h2>
-      <p class="mt-4 text-neutral-300 text-lg">Portofolio keren kami sedang disiapkan, tapi beberapa project sudah bisa dicek di bawah.</p>
-    </div>
-  </section>
-
-  <!-- Work Grid -->
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
-        <img src="images/project1.jpg" alt="Shopee Brand Campaign" class="rounded-xl w-full h-64 object-cover">
-        <div class="mt-3 text-white font-semibold text-center">Shopee Brand Campaign</div>
-      </div>
-      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
-        <img src="images/project2.jpg" alt="TikTok Shop Launch" class="rounded-xl w-full h-64 object-cover">
-        <div class="mt-3 text-white font-semibold text-center">TikTok Shop Launch</div>
-      </div>
-      <div class="rounded-3xl border border-neutral-800 p-4 bg-neutral-900">
-        <img src="images/project3.jpg" alt="Instagram Content Strategy" class="rounded-xl w-full h-64 object-cover">
-        <div class="mt-3 text-white font-semibold text-center">Instagram Content Strategy</div>
-      </div>
-      <!-- Tambah proyek lain di sini -->
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-black border-t border-neutral-800 pt-16 pb-8">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="grid md:grid-cols-3 gap-12">
-        <div>
-          <h3 class="font-bold text-lg">Stay in touch</h3>
-          <p class="mt-3 text-sm text-neutral-400">Dapetin insight industri terbaru & update dari kita.</p>
-        </div>
-        <div>
-          <h3 class="font-bold text-lg">Quick Links</h3>
-          <ul class="mt-4 space-y-3 text-sm">
-            <li><a href="services.html" class="text-neutral-400 hover:text-white">Services</a></li>
-            <li><a href="work.html" class="text-neutral-400 hover:text-white">Work</a></li>
-            <li><a href="about.html" class="text-neutral-400 hover:text-white">About Us</a></li>
-            <li><a href="contact.html" class="text-neutral-400 hover:text-white">Contact Us</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-bold text-lg">About Us</h3>
-          <p class="mt-3 text-sm text-neutral-400 leading-relaxed">
-            RH Management adalah agensi pertumbuhan untuk brand dan kreator, lahir sejak 2022. Dengan strategi berbasis data dan eksekusi yang cepat, kami siap jadi partner andalanmu di dunia digital.
-          </p>
-        </div>
-      </div>
-      <div class="mt-16 pt-8 border-t border-neutral-800 text-sm text-neutral-500 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>© <span id="y"></span> PT Berkat Melimpah Nusantara. All rights reserved.</div>
-        <div class="flex items-center gap-4">
-          <a href="#" class="hover:text-neutral-200">Privacy Policy</a>
-          <a href="#" class="hover:text-neutral-200">Terms of Use</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
-
-</body>
-</html>
-
-
-
-
